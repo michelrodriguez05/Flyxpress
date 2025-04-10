@@ -176,7 +176,9 @@ def menu_principal_clientes():
                                             time.sleep(1)
                                             limpiar()
                                             break
-                                        case "3": 
+                                        case "3":  mostrar_tickets_cliente()
+                                            
+                                        case "4":    
                                             print("Saliendo")
                                             time.sleep(1)
                                             limpiar()
@@ -206,6 +208,18 @@ def menu_principal_clientes():
                 limpiar()
                 break
 
+def consulta_clientes():
+    with open("clientes.json","r") as file:
+        clientes=json.load(file)
+    existe=False
+    id=input("Ingrese el id del cliente: ")
+    for cliente in clientes:
+        if cliente["ID"]==id:
+            existe=True
+            for clave, valor in cliente.items():
+                print(f"{clave}->{valor}")
+    if existe==False: print("CLiente no existe")
+
 def gestion_clientes_admin():
     while True:
         limpiar()
@@ -220,7 +234,9 @@ def gestion_clientes_admin():
             case "3": 
                 eliminar_cliente()
                 time.sleep(1)
-            case "4": 
+            case "4": consulta_clientes()
+            
+            case "5":
                 print("Saliendo")
                 time.sleep(1)
                 limpiar()
@@ -228,3 +244,4 @@ def gestion_clientes_admin():
             case _: 
                 print("Ingresa una opcion valida")
                 time.sleep(1)
+                

@@ -55,7 +55,7 @@ def crear_vuelo():
                         print("El precio no puede ser menor a 0")
                 except ValueError:
                     print("El precio debe ser un numero")
-            asiento=0
+            asiento=1
             for ticket in range(1,cantidad_asientos+1):
                 codigo_ticket=codigo+str(ticket)
                 tickets.append({"Ticket":codigo_ticket,
@@ -65,13 +65,14 @@ def crear_vuelo():
                 "Cliente":""})
                 asiento+=1
             vuelos.append({"Codigo":codigo,
-                "Origen":origen,
-                "Destino":destino,
-                "Fecha":fecha,
-                "Asientos":cantidad_asientos,
-                "Tickets":tickets})
+                     "Origen":origen,
+                    "Destino":destino,
+                    "Fecha":fecha,
+                    "Asientos":cantidad_asientos,
+                    "Tickets":tickets})
             escribir_vuelos(vuelos)
             tickets.clear()
+            print("El vuelo se registró correctamente")
 
 def guardar_historial(vuelos, archivo="historial.txt"):
     with open(archivo, "a", encoding="utf-8") as f:
@@ -124,6 +125,7 @@ def gestion_vuelos_admin():
                 time.sleep(2)
                 limpiar()
             case "3": 
+                
                 print( "Saliendo")
                 time.sleep(1)
                 limpiar() 

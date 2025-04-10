@@ -23,7 +23,8 @@ def cliente_sesion():
     Cliente
     1.Comprar tickets
     2.Editar informacion
-    3.Salir"""
+    3.Mostrar tickets cliente
+    4.Salir"""
     print(cliente_sesion)
     return input ("Ingrese una opciòn: ")
 
@@ -53,7 +54,8 @@ def gestion_clientes():
     1.Añadir
     2.Editar
     3.Eliminar
-    4.Salir"""
+    4.Consultar
+    5.Salir"""
     print(gescli)
     return input("Ingrese una opciòn: ")
 
@@ -61,9 +63,8 @@ def gestion_vuelos():
     gesvu="""
     Gestion vuelos
     1.Añadir vuelos
-    2.Editar vuelos
-    3.Salida vuelos
-    4.Salir"""
+    2.Salida vuelos
+    3.Salir"""
     print(gesvu)
     return input("Ingrese una opciòn: ")
 

@@ -38,5 +38,19 @@ def comprar_ticket(id_cliente):
     if not existe:
         print("El código de ticket ingresado no existe.")
                           
-    
+def mostrar_tickets_cliente():
+    tickets=abrirArchivo("vuelos")
+    clientes=abrirArchivo("clientes")
+    id=input("Ingrese el ID del cliente")
+    for cliente in clientes:
+        if cliente["ID"]==id:
+            print("---------------------------------")
+            for clave,valor in cliente.items():
+                if clave=="Tickets":
+                    for valore in valor:
+                        for clave1,valor1 in valore.items():
+                            print(f"{clave1}->{valor1}")
+            print("---------------------------------")
+            
+            
             
