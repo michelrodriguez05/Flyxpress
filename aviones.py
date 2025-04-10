@@ -11,7 +11,7 @@ def modificar_estado():
         avion_encontrado = False  
 
         for p in aviones:
-            if p["codigo_avion"].strip().lower() == codigo:
+            if p["Codigo_avion"]== codigo:
                 avion_encontrado = True
 
         if avion_encontrado==True:  
@@ -32,5 +32,6 @@ def modificar_estado():
 
         elif not avion_encontrado:
                 print("Avion con el codigo proporcionado no encontrado")
+
 
 
