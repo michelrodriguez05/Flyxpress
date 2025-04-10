@@ -9,34 +9,34 @@ def gusradraArchivo(archivo,diccionario):
         file.write(objetoJson)
     
 def comprar_ticket():
-    vuelo=abrirArchivo("vuelos")
-    vuelo2=input("Ingrese el codigo del ticket ")
+    vuelos=abrirArchivo("vuelos")
+    clientes=abrirArchivo("clientes")
+    cod_ticket=input("Ingrese el codigo del ticket:")
     existe=False
-    for tickets in vuelo:
-        for cod in tickets.items():
-                for ticket in tickets:
-                    for valor in tickets.items():
-                        if cod==vuelo2: 
-                            existe=True  
-                               
-    if existe==True:
-        while True:
-            opc=input("¿Desea comprar ese ticket(S/N):").upper()
-            if opc=="S":
-                for precio in tickets:
-                    for valor in precio.items():
-                        precio=valor["Precio"]
-                        asiento=valor["Asiento"]
-                cliente=input("Ingrese el codigo del cliente:")
-                vuelos={
-                    "Ticket":vuelo2,
-                    "Precio":precio,
-                    "Asiento":asiento,
-                    "Vendido":True,
-                    "Cliente":cliente
-                }
-                vuelo.append(vuelos)
-                gusradraArchivo("vuelos",vuelo)
-                break
+    for vuelo in vuelo:
+        if vuelo["Tickets"]:
+                for ticket in vuelo["Tickets"]:
+                    if ticket.get("Ticket")==cod_ticket
+                        if ticket["Vendido"]: 
+                            pass
+                        else:
+                            ticket["Vendido"] = True
+                            ticket["Cliente"] = id_cliente
+                            print("¡Ticket comprado exitosamente!")
+                            gusradraArchivo("vuelos",vuelos)
+                            for cliente in clientes:
+                                if cliente["ID"]==id_cliente:
+                                cliente["Tickets"].append({"Codigo":codticket})
+                                gusradraArchivo("clientes",clientes)
+                                print("Se comprò el ticket correctamente")
+
+                        existe = True
+                        break
+        if existe:
+            break 
+
+    if not existe:
+        print("El código de ticket ingresado no existe.")
+                          
+    
             
-comprar_ticket()
