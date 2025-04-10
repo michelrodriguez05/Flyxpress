@@ -1,5 +1,5 @@
 import json
-
+from menu import *
 def leer_vuelos():
     with open ("vuelos.json","r") as file:
         vuelos=json.load(file)
@@ -72,3 +72,61 @@ def crear_vuelo():
                 "Tickets":tickets})
             escribir_vuelos(vuelos)
             tickets.clear()
+
+def guardar_historial(vuelos, archivo="historial.txt"):
+    with open(archivo, "a", encoding="utf-8") as f:
+        for vuelo in vuelos:
+            vendidos = [t for t in vuelo["Tickets"] if t["Vendido"]]
+            if not vendidos:
+                continue  # no guardar si no hay vendidos
+
+            codigo = vuelo["Codigo"]
+            origen = vuelo["Origen"]
+            destino = vuelo["Destino"]
+            fecha = vuelo["Fecha"]
+
+            f.write(f"Viaje {codigo} ({origen} - {destino}) - Fecha: {fecha}\n")
+            f.write("Tickets vendidos:\n")
+            for ticket in vendidos:
+                ticket_id = ticket["Ticket"]
+                asiento = ticket["Asiento"]
+                cliente = ticket["Cliente"]
+                f.write(f"  Ticket: {ticket_id} | Asiento: {asiento} | Cliente: {cliente}\n")
+            f.write("-" * 47 + "\n")
+
+def iniciar_vuelo():
+    vuelo_existe=False
+    vuelos=leer_vuelos()
+    codigo=input("Ingrese el codigo del vuelo: ")
+    for vuelo in vuelos:   
+        if vuelo["Codigo"]==codigo:
+            vuelo_existe=True
+            indice_vuelo=vuelos.index(vuelo)
+    if vuelo_existe==True:
+        vuelo = vuelos[indice_vuelo]
+        guardar_historial([vuelo])
+        vuelos.pop(indice_vuelo)
+        escribir_vuelos(vuelos)
+        print("El vuelo ha salido correctamente, se guardò en el historial")
+    else: print("El vuelo no existe")
+
+def gestion_vuelos_admin():
+    while True:
+        op=gestion_vuelos()
+        limpiar()
+        match op:
+            case "1": 
+                crear_vuelo()
+                time.sleep(2)
+                limpiar()
+            case "2": 
+                iniciar_vuelo()
+                time.sleep(2)
+                limpiar()
+            case "3": 
+                print( "Saliendo")
+                time.sleep(1)
+                limpiar() 
+                break
+            case _: print("Ingrese una opcion valida")
+
