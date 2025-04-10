@@ -8,7 +8,7 @@ def gusradraArchivo(archivo,diccionario):
     with open(f"{archivo}.json","w") as file:
         file.write(objetoJson)
     
-def comprar_ticket():
+def comprar_ticket(id_cliente):
     vuelos=abrirArchivo("vuelos")
     clientes=abrirArchivo("clientes")
     cod_ticket=input("Ingrese el codigo del ticket:")
@@ -16,7 +16,7 @@ def comprar_ticket():
     for vuelo in vuelo:
         if vuelo["Tickets"]:
                 for ticket in vuelo["Tickets"]:
-                    if ticket.get("Ticket")==cod_ticket
+                    if ticket.get("Ticket")==cod_ticket:
                         if ticket["Vendido"]: 
                             pass
                         else:
@@ -26,9 +26,9 @@ def comprar_ticket():
                             gusradraArchivo("vuelos",vuelos)
                             for cliente in clientes:
                                 if cliente["ID"]==id_cliente:
-                                cliente["Tickets"].append({"Codigo":codticket})
-                                gusradraArchivo("clientes",clientes)
-                                print("Se comprò el ticket correctamente")
+                                    cliente["Tickets"].append({"Codigo":cod_ticket})
+                                    gusradraArchivo("clientes",clientes)
+                                    print("Se comprò el ticket correctamente")
 
                         existe = True
                         break
