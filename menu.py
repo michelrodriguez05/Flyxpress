@@ -1,3 +1,5 @@
+import os, time
+
 def menu_principal():
     menu_prin="""
     Menu Principal
@@ -13,7 +15,7 @@ def menu_clientes():
     1.Iniciar sesion
     2.Registrarse
     3.Salir"""
-    print(menu_clientes)
+    print(menuclientes)
     return input ("Ingrese una opcion: ")
 
 def cliente_sesion():
@@ -73,3 +75,36 @@ def gestion_aviones():
     3.Salir"""
     print(gesavi)
     return input("Ingrese una opciòn: ")
+
+def limpiar():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def saludo():
+    limpiar()
+    time.sleep(1)
+    mensaje ="""
+    ================================
+                Flyxpress
+    ================================
+    """
+    avion = "✈"
+    longitud = 40
+    print("           ")
+    for i in range(longitud):
+        espacio = " " * i
+        linea_avion = espacio + avion
+        sys.stdout.write("\r" + linea_avion)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    limpiar()
+    time.sleep(1)
+    print(f"\n{mensaje}")
+
+def sub_saludo():
+    print("               Bienvenido...")
+    time.sleep(1)
+    print("            Cargando sistema...")
+    time.sleep(2)
+    print("      Sistemas cargados, inicializando")
+    time.sleep(1)
+    limpiar()

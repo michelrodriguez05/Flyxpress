@@ -1,7 +1,9 @@
 import json
 import os
 import time
-
+from menu import *
+from compra_ticket import *
+from lista_tickets import *
 
 ARCHIVO_CLIENTES = "clientes.json"
 ARCHIVO_BLOQUEOS = "bloqueos.json"
@@ -30,21 +32,29 @@ def guardar_datos(data, archivo):
 def añadir_cliente():
     try:
         clientes = cargar_datos(ARCHIVO_CLIENTES)
-        id_cliente = int(input("ID del cliente: "))
+        id_cliente = (input("ID del cliente: "))
         if any(c["ID"] == id_cliente for c in clientes):
             print("El ID ya existe.")
             return
         nombre = input("Nombre del cliente: ")
-        nuevo_cliente = {"ID": id_cliente, "Nombre": nombre, "Contraseña": None}
+        while True:
+            contraseña=input("Ingrese una contraseña: ")
+            contraseña2=input("Confirme la contraseña: ")
+            if contraseña==contraseña2:
+                print("Las contraseñas coinciden")
+                break
+            else: print("Las contraseñas no coinciden")
+        nuevo_cliente = {"ID": id_cliente, "Nombre": nombre, "Contraseña": contraseña, "Tickets":[]}
         clientes.append(nuevo_cliente)
         guardar_datos(clientes, ARCHIVO_CLIENTES)
-        print("Cliente añadido. Ahora debe registrarse con una contraseña.")
+        print("Cliente añadido con exito")
     except ValueError:
         print("El ID debe ser un número entero.")
     except Exception as e:
         print(f"Error inesperado: {e}")
 
-def registrar_o_iniciar_sesion():
+def iniciar_sesion():
+    acceso=False
     try:
         clientes = cargar_datos(ARCHIVO_CLIENTES)
         bloqueos = cargar_datos(ARCHIVO_BLOQUEOS)
@@ -54,19 +64,13 @@ def registrar_o_iniciar_sesion():
 
         if not cliente:
             print("Cliente no encontrado.")
-            return
+            return id_cliente, acceso
+        
 
         tiempo_bloqueo = bloqueos.get(id_cliente, 0)
         if tiempo_bloqueo > 0:
             print(f"Cliente bloqueado. Esperando {tiempo_bloqueo} segundos...")
             time.sleep(tiempo_bloqueo)
-
-        if cliente["Contraseña"] is None:
-            nueva_pass = input("Cree una contraseña: ")
-            cliente["Contraseña"] = nueva_pass
-            guardar_datos(clientes, ARCHIVO_CLIENTES)
-            print("Registro exitoso.")
-            return
 
         intentos = 3
         while intentos > 0:
@@ -75,7 +79,8 @@ def registrar_o_iniciar_sesion():
                 print(f"Bienvenido/a {cliente['Nombre']}.")
                 bloqueos[id_cliente] = 0
                 guardar_datos(bloqueos, ARCHIVO_BLOQUEOS)
-                return
+                acceso=True
+                return id_cliente, acceso
             else:
                 intentos -= 1
                 print(f"Contraseña incorrecta. Intentos restantes: {intentos}")
@@ -91,13 +96,32 @@ def registrar_o_iniciar_sesion():
 def editar_cliente():
     try:
         clientes = cargar_datos(ARCHIVO_CLIENTES)
-        id_buscar = int(input("ID del cliente a editar: "))
+        id_buscar = (input("ID del cliente a editar: "))
         cliente = next((c for c in clientes if c["ID"] == id_buscar), None)
         if not cliente:
             print("Cliente no encontrado.")
             return
         nuevo_nombre = input(f"Nuevo nombre (anterior: {cliente['Nombre']}): ")
         cliente["Nombre"] = nuevo_nombre
+        cliente["Contraseña"]=input("Ingresa una contraseña nueva: ")
+        guardar_datos(clientes, ARCHIVO_CLIENTES)
+        print("Cliente editado.")
+    except ValueError:
+        print("El ID debe ser un número.")
+    except Exception as e:
+        print(f"Error al editar cliente: {e}")
+
+
+def editar_cliente_cliente(id_cliente):
+    try:
+        clientes = cargar_datos(ARCHIVO_CLIENTES)
+        cliente = next((c for c in clientes if c["ID"] == id_cliente), None)
+        if not cliente:
+            print("Cliente no encontrado.")
+            return
+        nuevo_nombre = input(f"Nuevo nombre (anterior: {cliente['Nombre']}): ")
+        cliente["Nombre"] = nuevo_nombre
+        cliente["Contraseña"]=input("Ingresa una contraseña nueva: ")
         guardar_datos(clientes, ARCHIVO_CLIENTES)
         print("Cliente editado.")
     except ValueError:
@@ -108,7 +132,7 @@ def editar_cliente():
 def eliminar_cliente():
     try:
         clientes = cargar_datos(ARCHIVO_CLIENTES)
-        id_eliminar = int(input("ID del cliente a eliminar: "))
+        id_eliminar = (input("ID del cliente a eliminar: "))
         nuevos_clientes = [c for c in clientes if c["ID"] != id_eliminar]
         if len(nuevos_clientes) == len(clientes):
             print("Cliente no encontrado.")
@@ -119,3 +143,88 @@ def eliminar_cliente():
         print("El ID debe ser numérico.")
     except Exception as e:
         print(f"Error al eliminar cliente: {e}")
+
+def menu_principal_clientes():
+    limpiar()
+    while True:
+        op=menu_clientes()
+        limpiar()
+        match op:
+            case "1": 
+                id_cliente, acceso=iniciar_sesion()
+                time.sleep(1)
+                limpiar()
+                if acceso==True:
+                    while True:
+                        op=cliente_sesion()
+                        time.sleep(1)
+                        limpiar()
+                        match op:
+                            case "1": 
+                                while True:
+                                    op=cliente_tickets()   
+                                    time.sleep(1)
+                                    limpiar()
+                                    match op:
+                                        case "1":
+                                            listar_tickets()
+                                            input("Ingrese cualquier tecla para volver")
+                                            limpiar()
+                                            break
+                                        case "2":
+                                            comprar_ticket(id_cliente)
+                                            time.sleep(1)
+                                            limpiar()
+                                            break
+                                        case "3": 
+                                            print("Saliendo")
+                                            time.sleep(1)
+                                            limpiar()
+                                            break
+                                        case _: 
+                                            print("Ingresa una opcion valida")
+                                            time.sleep(1)
+                            case "2": 
+                                editar_cliente_cliente(id_cliente)
+                                time.sleep(1)
+                                limpiar()
+                            case "3": 
+                                print("Saliendo")
+                                time.sleep(1)
+                                limpiar()
+                                break
+                            case _: 
+                                print("Ingrese una opcion valida")
+                                time.sleep(1)
+            case "2": 
+                añadir_cliente()
+                time.sleep(1)
+                limpiar()
+            case "3":
+                print("Saliendo")
+                time.sleep(1)
+                limpiar()
+                break
+
+def gestion_clientes_admin():
+    while True:
+        limpiar()
+        op=gestion_clientes()
+        match op:
+            case "1": 
+                añadir_cliente()
+                time.sleep(1)
+            case "2": 
+                editar_cliente()
+                time.sleep(1)
+            case "3": 
+                eliminar_cliente()
+                time.sleep(1)
+            case "4": 
+                print("Saliendo")
+                time.sleep(1)
+                limpiar()
+                break
+            case _: 
+                print("Ingresa una opcion valida")
+                time.sleep(1)
