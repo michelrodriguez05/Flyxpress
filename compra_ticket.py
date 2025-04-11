@@ -13,7 +13,7 @@ def comprar_ticket(id_cliente):
     clientes=abrirArchivo("clientes")
     cod_ticket=input("Ingrese el codigo del ticket:")
     existe=False
-    for vuelo in vuelo:
+    for vuelo in vuelos:
         if vuelo["Tickets"]:
                 for ticket in vuelo["Tickets"]:
                     if ticket.get("Ticket")==cod_ticket:
@@ -41,10 +41,11 @@ def comprar_ticket(id_cliente):
 def mostrar_tickets_cliente():
     tickets=abrirArchivo("vuelos")
     clientes=abrirArchivo("clientes")
-    id=input("Ingrese el ID del cliente")
+    id=input("Ingrese el ID del cliente: ")
     for cliente in clientes:
         if cliente["ID"]==id:
             print("---------------------------------")
+            print(f"              {id}              ")
             for clave,valor in cliente.items():
                 if clave=="Tickets":
                     for valore in valor:

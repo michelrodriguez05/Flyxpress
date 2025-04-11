@@ -6,7 +6,7 @@ FILE_AVIONES = "aviones.json"
 
 def modificar_estado():
         aviones = cargar_datos(FILE_AVIONES)
-        codigo = input("Ingrese el codigo del avion: ").strip().lower()
+        codigo = input("Ingrese el codigo del avion: ")
 
         avion_encontrado = False  
 
@@ -47,8 +47,14 @@ def gestionaviones():
     while True:
         op=gestion_aviones()
         match op:
-            case "1":modificar_estado()
-            case "2":mostrar_aviones()
+            case "1":
+                  mostrar_aviones()
+                  input("Ingrese cualquier tecla para volver: ")
+                  limpiar()
+            case "2":
+                  modificar_estado()
+                  time.sleep(2)
+                  limpiar()
             case "3":
                 print("Saliendo")
                 time.sleep(1)

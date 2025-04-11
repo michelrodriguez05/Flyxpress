@@ -44,7 +44,7 @@ def añadir_cliente():
                 print("Las contraseñas coinciden")
                 break
             else: print("Las contraseñas no coinciden")
-        nuevo_cliente = {"ID": id_cliente, "Nombre": nombre, "Contraseña": contraseña, "Tickets":[]}
+        nuevo_cliente = {"ID": id_cliente, "Nombre": nombre, "Contrasenia": contraseña, "Tickets":[]}
         clientes.append(nuevo_cliente)
         guardar_datos(clientes, ARCHIVO_CLIENTES)
         print("Cliente añadido con exito")
@@ -59,7 +59,7 @@ def iniciar_sesion():
         clientes = cargar_datos(ARCHIVO_CLIENTES)
         bloqueos = cargar_datos(ARCHIVO_BLOQUEOS)
         
-        id_cliente = input("Ingrese su ID de cliente: ").strip()
+        id_cliente = input("Ingrese su ID de cliente: ")
         cliente = next((c for c in clientes if str(c["ID"]) == id_cliente), None)
 
         if not cliente:
@@ -75,7 +75,7 @@ def iniciar_sesion():
         intentos = 3
         while intentos > 0:
             intento = input("Ingrese su contraseña: ")
-            if intento == cliente["Contraseña"]:
+            if intento == cliente["Contrasenia"]:
                 print(f"Bienvenido/a {cliente['Nombre']}.")
                 bloqueos[id_cliente] = 0
                 guardar_datos(bloqueos, ARCHIVO_BLOQUEOS)
@@ -103,7 +103,7 @@ def editar_cliente():
             return
         nuevo_nombre = input(f"Nuevo nombre (anterior: {cliente['Nombre']}): ")
         cliente["Nombre"] = nuevo_nombre
-        cliente["Contraseña"]=input("Ingresa una contraseña nueva: ")
+        cliente["Contrasenia"]=input("Ingresa una contraseña nueva: ")
         guardar_datos(clientes, ARCHIVO_CLIENTES)
         print("Cliente editado.")
     except ValueError:
@@ -121,7 +121,7 @@ def editar_cliente_cliente(id_cliente):
             return
         nuevo_nombre = input(f"Nuevo nombre (anterior: {cliente['Nombre']}): ")
         cliente["Nombre"] = nuevo_nombre
-        cliente["Contraseña"]=input("Ingresa una contraseña nueva: ")
+        cliente["Contrasenia"]=input("Ingresa una contraseña nueva: ")
         guardar_datos(clientes, ARCHIVO_CLIENTES)
         print("Cliente editado.")
     except ValueError:
@@ -167,18 +167,15 @@ def menu_principal_clientes():
                                     limpiar()
                                     match op:
                                         case "1":
+                                            limpiar()
                                             listar_tickets()
                                             input("Ingrese cualquier tecla para volver")
                                             limpiar()
-                                            break
                                         case "2":
                                             comprar_ticket(id_cliente)
                                             time.sleep(1)
                                             limpiar()
-                                            break
-                                        case "3":  mostrar_tickets_cliente()
-                                            
-                                        case "4":    
+                                        case "3":    
                                             print("Saliendo")
                                             time.sleep(1)
                                             limpiar()
@@ -191,6 +188,10 @@ def menu_principal_clientes():
                                 time.sleep(1)
                                 limpiar()
                             case "3": 
+                                mostrar_tickets_cliente()
+                                input("Ingrese cualquier tecla para volver")
+                                limpiar()
+                            case "4":
                                 print("Saliendo")
                                 time.sleep(1)
                                 limpiar()
@@ -234,8 +235,10 @@ def gestion_clientes_admin():
             case "3": 
                 eliminar_cliente()
                 time.sleep(1)
-            case "4": consulta_clientes()
-            
+            case "4": 
+                consulta_clientes()
+                input("Ingrese cualquier tecla para continuar: ")
+                limpiar()
             case "5":
                 print("Saliendo")
                 time.sleep(1)

@@ -1,36 +1,58 @@
-[{"Codigo_avion":"AVI001",
-  "Asientos":10,
-  "Activo":true},
-  {"Codigo_avion":"AVI002",
-  "Asientos":20,
-  "Activo":true},
-  {"Codigo_avion":"AVI003",
-  "Asientos":15,
-  "Activo":false},
-  {"Codigo_avion":"AVI004",
-  "Asientos":22,
-  "Activo":false},
-  {"Codigo_avion":"AVI005",
-  "Asientos":10,
-  "Activo":true},
-  {"Codigo_avion":"AVI006",
-  "Asientos":12,
-  "Activo":true},
-  {"Codigo_avion":"AVI007",
-  "Asientos":20,
-  "Activo":false},
-  {"Codigo_avion":"AVI008",
-  "Asientos":10,
-  "Activo":true},
-  {"Codigo_avion":"AVI009",
-  "Asientos":22,
-  "Activo":false},
-  {"Codigo_avion":"AVI010",
-  "Asientos":15,
-  "Activo":true},
-  {"Codigo_avion":"AVI011",
-  "Asientos":50,
-  "Activo":false}
-
-
-] 
+[
+    {
+        "Codigo_avion": "AVI001",
+        "Asientos": 10,
+        "Activo": true
+    },
+    {
+        "Codigo_avion": "AVI002",
+        "Asientos": 20,
+        "Activo": true
+    },
+    {
+        "Codigo_avion": "AVI003",
+        "Asientos": 15,
+        "Activo": false
+    },
+    {
+        "Codigo_avion": "AVI004",
+        "Asientos": 22,
+        "Activo": false
+    },
+    {
+        "Codigo_avion": "AVI005",
+        "Asientos": 10,
+        "Activo": true
+    },
+    {
+        "Codigo_avion": "AVI006",
+        "Asientos": 12,
+        "Activo": true
+    },
+    {
+        "Codigo_avion": "AVI007",
+        "Asientos": 20,
+        "Activo": false
+    },
+    {
+        "Codigo_avion": "AVI008",
+        "Asientos": 10,
+        "Activo": true
+    },
+    {
+        "Codigo_avion": "AVI009",
+        "Asientos": 22,
+        "Activo": false
+    },
+    {
+        "Codigo_avion": "AVI010",
+        "Asientos": 15,
+        "Activo": true
+    },
+    {
+        "Codigo_avion": "AVI011",
+        "Asientos": 50,
+        "Activo": false,
+        "estado": true
+    }
+]

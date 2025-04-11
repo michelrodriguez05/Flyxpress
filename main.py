@@ -4,8 +4,8 @@ from functions_client import *
 from feature_travels import *
 from aviones import *
 
-saludo()
-sub_saludo()
+# saludo()
+# sub_saludo()
 contra="holamundo"
 while True:
     limpiar()
